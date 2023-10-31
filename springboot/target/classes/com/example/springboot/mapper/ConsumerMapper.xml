@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.ConsumerMapper">
+
+    <insert id="insertConsumer">
+        insert into consumer(consumerId, password, mobile, nickName, gender, gradeId, addressId,
+                             country, province, city, balance, points, consumeMoney, createTime, lastLoginTime)
+
+        values (#{consumerId},#{password},#{mobile},#{nickName},#{gender},#{gradeId},#{addressId},#{country},#{province},
+                #{city},#{balance},#{points},#{consumeMoney},#{createTime},#{lastLoginTime});
+    </insert>
+
+    <update id="addBusinessBalance">
+        update business set balance = #{r} where storeId = #{storeId};
+    </update>
+
+    <update id="updateConsumer">
+        update consumer set consumer_id = #{consumerId}, password = #{password}, mobile = #{mobile}, nick_name = #{nickName},
+                    gender = #{gender}, address_id = #{addressId}, country = #{country}, province = #{province},
+                    city = #{city}, balance = #{balance}, points = #{points}, consumer_money = #{consumeMoney},
+                    create_time = #{createTime}, last_login_time = #{lastLoginTime};
+    </update>
+    <update id="updateBalance">
+        update consumer set balance = #{newBalance} where nickName = #{consumerId};
+    </update>
+
+    <delete id="delConsumer">
+        delete from consumer where consumer_id=#{consumerId};
+    </delete>
+
+    <select id="selectConsumerByConsumerId" resultType="com.example.springboot.pojo.consumer.Consumer">
+        select * from consumer where consumer_id = #{consumerId};
+    </select>
+
+    <select id="selectConsumerByMobile" resultType="com.example.springboot.pojo.consumer.Consumer">
+        select * from consumer where mobile = #{mobile};
+    </select>
+
+    <select id="selectConsumerByNickName" resultType="com.example.springboot.pojo.consumer.Consumer">
+        select * from consumer where nickName = #{nickName};
+    </select>
+
+    <select id="selectConsumerByPagination" resultType="com.example.springboot.pojo.consumer.Consumer">
+        select * from consumer
+        <where>
+            <if test="mobile != null and mobile != ''">
+                mobile like concat('%', #{mobile}, '%')
+            </if>
+            <if test="gender != null and gender != ''">
+                and gender = #{gender}
+            </if>
+        </where>
+        limit #{start}, #{pageSize};
+    </select>
+
+
+    <select id="selectConsumerBalance" resultType="java.lang.Double">
+        select balance from consumer where nickName = #{nickName};
+    </select>
+
+    <select id="selectBusinessBalance" resultType="java.lang.Integer">
+        select balance from business where storeId = #{storeId};
+    </select>
+
+</mapper>

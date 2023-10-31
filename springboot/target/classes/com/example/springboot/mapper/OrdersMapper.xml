@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.springboot.mapper.OrdersMapper">
+
+    <insert id="insertOrder">
+        insert into orders(orderId,consurmerId,orderPrice,goodsNum,storeId,goodsId,skuId
+        ,payTime,createTime,isDelete,statusText)values (#{orderId},#{consumerId},#{orderPrice},#{goodsNum},#{storeId},
+            #{goodsId},#{skuId},#{payTime},#{createTime},#{isDelete},#{statusText});
+    </insert>
+
+    <insert id="insertConsumerOrder">
+        insert into orders(orderId,consumerId,orderPrice,goodsNum,storeId,goodsId,skuId
+                          ,payTime,createTime,isDelete,statusText)values (#{orderId},#{consumerId},#{orderPrice},#{goodsNum},#{storeId},
+                                                                          #{goodsId},#{skuId},#{payTime},#{createTime},#{isDelete},#{statusText});
+    </insert>
+
+
+    <update id="updateOrder">
+        update orders set orderId=#{orderId},consurmerId=#{consumerId},orderPrice=#{orderPrice},goodsNum=#{goodsNum}
+                          ,storeId=#{storeId},goodsId=#{goodsId},skuId=#{skuId},
+                          payTime=#{payTime},createTime=#{createTime},isDelete=#{isDelete},statusText=#{statusText};
+    </update>
+
+    <delete id="delOrder">
+        delete  from orders where orderId=#{orderId};
+    </delete>
+
+    <select id="selectOrderInfoBYOrderId"
+            resultType="com.example.springboot.pojo.consumer.myOrder.mvc.OrderInfo">
+        select * from orders where orderId = #{orderId} ;
+    </select>
+
+    <select id="selectOrderByOrderId" resultType="com.example.springboot.pojo.consumer.myOrder.Order">
+        select * from orders where orderId = #{orderId};
+    </select>
+
+    <select id="selectOrderByConsumerId" resultType="com.example.springboot.pojo.consumer.myOrder.Order">
+        select * from orders where consumerId = #{consumerId};
+    </select>
+
+    <select id="selectOrderByStoreId" resultType="com.example.springboot.pojo.consumer.myOrder.Order">
+        select * from orders where storeId = #{storeId} and isDelete = 0;
+    </select>
+    <select id="selectOrderIdsByPagination" resultType="java.lang.Integer">
+        select orderId from orders
+        <where>
+            storeId = #{storeId}
+            <if test="statusText != null and statusText != ''">
+                and statusText = #{statusText}
+            </if>
+            <if test="createTimeStart != null">
+                and createTime >= #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                and createTime &lt;= #{createTimeEnd}
+            </if>
+        </where>
+        limit ${start},${pageSize} ;
+    </select>
+
+</mapper>

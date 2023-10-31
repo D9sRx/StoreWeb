@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.GoodsMapper">
+    <insert id="insertSkuDetail">
+        insert into skudetail(id,skuInfoId,storeId,name,price)
+        values (#{id}, #{skuInfoId}, #{storeId}, #{name}, #{price});
+
+    </insert>
+
+    <insert id="insertSku" useGeneratedKeys="true" keyColumn="skuId" keyProperty="skuId">
+        insert into sku(skuId,goodsId,storeId,current_storage,lowest_storage,create_time,update_time)
+        values (#{skuId}, #{goodsId}, #{storeId}, #{currentStorage}, #{lowestStorage}, #{createTime}, #{updateTime});
+    </insert>
+
+    <insert id="insertGoodsDetailImage">
+        insert into goods_detailImage(id,type,storeId,goodsId,image_url)
+        values (#{id},#{type},#{storeId},#{goodsId},#{imageUrl});
+    </insert>
+
+    <insert id="insertGoods">
+        insert into goods(goodsId,goodsName,goodsInitPrice,goodsSellPrice,goodsCategory,storeId,currentStorage
+        ,lowestStorage,status,createTime,updateTime,imageUrl) values (#{goodsId},#{goodsName},#{goodsInitPrice},#{goodsSellPrice},#{goodsCategory},#{storeId},#{currentStorage}
+                 ,#{lowestStorage},#{status},#{createTime},#{updateTime},#{imageUrl});
+    </insert>
+
+    <update id="updateGoods">
+        update goods set id = #{id}, goodsId = #{goodsId}, oodsName = #{goodsName}, goodsInit_price = #{goodsInit_price},
+             goods_sell_price = #{goodsSellPrice}, goodsCategory = #{goodsCategory}, storeId = #{storeId},current_storage = #{currentStorage},
+             lowest_storage = #{lowestStorage}, status = #{status}, create_time=#{createTime}, update_time = #{updateTime}, image_url = #{imageUrl} where goodsId = #{goodsId};
+    </update>
+
+    <update id="updateSku">
+        update sku set id=#{id},skuId=#{skuId},goodsId=#{goodsId},storeId=#{storeId},current_storage=#{currentStorage},lowest_storage=#{lowestStorage},creat_time=#{creatTime},update_time=#{updateTime} where skuId = #{skuId};
+    </update>
+
+    <update id="updateSkuDetail">
+        update  skudetail set id = #{id}, skuInfoId = #{skuInfoId}, storeId = #{storeId}, name = #{name},
+                    price = #{price} where skuInfoId = #{skuInfoId};
+    </update>
+
+    <delete id="delGoods">
+        delete from goods where goodsId=#{goodsId};
+    </delete>
+
+    <delete id="delSku">
+        delete from sku where storeId = #{storeId} and skuId=#{skuId};
+    </delete>
+
+    <delete id="delSkuDetail">
+        delete from skudetail where skuInfoId=#{skuInfoId};
+    </delete>
+
+
+    <select id="selectGoodsByCategoryId" resultType="com.example.springboot.pojo.Goods.mvc.GoodsInfo">
+        select * from goods where goodsCategory = #{categoryId};
+    </select>
+
+
+    <select id="selectGoodsInfoByCategoryId" resultType="com.example.springboot.pojo.Goods.mvc.GoodsInfo">
+        select * from goods where goodsCategory = #{categoryId};
+    </select>
+
+    <select id="selectSkuInfoByGoodsId" resultType="com.example.springboot.pojo.Goods.mvc.SkuInfo">
+        select * from  sku where goodsId=#{goodsId};
+    </select>
+
+    <select id="selectSkuInfoByStoreIdWithGoodsId" resultType="com.example.springboot.pojo.Goods.mvc.SkuInfo">
+        select * from sku where storeId = #{storeId} and goodsId = #{goodsId};
+    </select>
+
+    <select id="selectSkuDetailBySkuId" resultType="com.example.springboot.pojo.Goods.SkuDetail">
+        select * from skudetail where storeId = #{storeId} and skuInfoId = #{skuId};
+    </select>
+
+    <select id="selectGoodsDetailImageByGoodsIdWithType"
+            resultType="com.example.springboot.pojo.Goods.GoodsDetailImage">
+        select * from goods_detail_image where storeId = #{storeId} and goodsId = #{goodsId} and type = #{type} ;
+    </select>
+
+    <select id="selectGoodsDetailInfoByStoreIdWithGoodsId" resultType="com.example.springboot.pojo.Goods.mvc.GoodsDetailInfo">
+        select * from goods where storeId = #{storeId} and goodsId = #{goodsId};
+    </select>
+
+    <select id="selectGoodsByGoodsName" resultType="com.example.springboot.pojo.Goods.Goods">
+        select * from goods where goodsName like concat('%',#{goodsName},'%');
+    </select>
+
+    <select id="selectGoodsInfoByStoreIdWithGoodsId"
+            resultType="com.example.springboot.pojo.Goods.mvc.GoodsInfo">
+        select * from goods where storeId = #{storeId} and goodsId = #{goodsId};
+    </select>
+
+    <select id="selectSkuInfoByStoreIdWithSkuId" resultType="com.example.springboot.pojo.Goods.mvc.SkuInfo">
+        select * from sku where storeId = #{storeId} and skuId = #{skuId};
+    </select>
+
+    <select id="selectOneGoodsPrice" resultType="java.lang.Double">
+        select * from goods where storeId#{storeId} and goodsId=#{goodId} and skuId=#{skuId};
+    </select>
+
+    <select id="selectGoodsByStoreIdWithGoodsId" resultType="com.example.springboot.pojo.Goods.Goods">
+        select * from goods where storeId = #{storeId} and goodsId = #{goodsId}
+    </select>
+    <select id="selectGoodsByStoreId" resultType="com.example.springboot.pojo.Goods.Goods">
+        select * from goods where storeId = #{storeId} ;
+    </select>
+
+    <select id="selectStoreIdByGoodsId" resultType="java.lang.Integer">
+        select storeId from goods where goodsId = #{goodsId} ;
+    </select>
+    <select id="selectGoodsInfoByStoreId" resultType="com.example.springboot.pojo.Goods.mvc.GoodsInfo">
+        select * from goods
+                 <where>
+                     storeId = #{storeId}
+                     <if test="goodsName != '' and goodsName != null">
+                         and goodsName like concat('%',#{goodsName},'%')
+                     </if>
+                 </where>  ;
+    </select>
+    <select id="selectGoodsInfoByStoreIdWithBlurName"
+            resultType="com.example.springboot.pojo.Goods.mvc.GoodsInfo">
+        SELECT * FROM goods WHERE storeId = #{storeId} AND CONCAT('%', goodsName, '%') LIKE #{goodsName};
+    </select>
+
+
+</mapper>

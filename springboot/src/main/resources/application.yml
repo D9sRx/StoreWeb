@@ -1,0 +1,12 @@
+server:
+  port: 9090
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/phonestore?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2b8
+    username: root
+    password: 4825550100
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case=true:

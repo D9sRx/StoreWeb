@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.CommonMapper">
+
+    <insert id="insertYzm">
+        insert into yzm(pic_code, pic_key) values (#{picCode}, #{picKey});
+    </insert>
+
+    <delete id="delYzm">
+        delete from yzm where pic_key = #{picKey};
+    </delete>
+
+    <select id="selectYzm" resultType="com.example.springboot.pojo.common.Yzm">
+        select * from yzm where pic_key = #{picKey} ;
+    </select>
+</mapper>

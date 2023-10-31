@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+    <servlet>
+        <servlet-name>a</servlet-name>
+        <jsp-file>/configTest.jsp</jsp-file>
+        <init-param>
+            <param-name>school</param-name>
+            <param-value>SEIG</param-value>
+        </init-param>
+        <init-param>
+            <param-name>major</param-name>
+            <param-value>SoftWare</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>a</servlet-name>
+        <url-pattern>/configTest.jsp</url-pattern>
+    </servlet-mapping>
+</web-app>

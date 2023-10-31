@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.GoodsCategoryMapper">
+
+    <insert id="insertGoodsCategory">
+        insert into goods_category(category_id,name,parent_id,status,imageUrl,sort)
+                values (#{categoryId},#{name},#{parentId},#{status},#{imageUrl},#{sort});
+    </insert>
+
+    <update id="updateGoodsCategory">
+        update goods_category set category_id = #{categoryId}, name = #{name}, parent_id = #{parentId},
+                    status = #{status}, image_url = #{imageUrl}, sort = #{sort} where category_id = #{categoryId};
+    </update>
+
+    <delete id="delGoodsCategoryByCategoryId">
+        delete from goods_category where category_id = #{categoryId};
+    </delete>
+
+    <delete id="delGoodsCategoryByParentId">
+        delete from goods_category where parent_id = #{parentId};
+    </delete>
+
+    <select id="selectCategoryByParentId" resultType="com.example.springboot.pojo.GoodsCategory.GoodsCategory">
+        select * from goods_category where parent_id = #{parentId};
+    </select>
+
+    <select id="selectCategoryByCategoryId"
+            resultType="com.example.springboot.pojo.GoodsCategory.GoodsCategory">
+        select * from goods_category where categoryId = #{categoryId};
+    </select>
+</mapper>

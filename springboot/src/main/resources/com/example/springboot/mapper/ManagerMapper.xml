@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.ManagerMapper">
+
+    <insert id="insertManager">
+        insert into manager(managerName, password, role)values (#{managerName}, #{password}, #{role});
+    </insert>
+
+    <update id="updateManager">
+        update manager set managerName = #{managerName}, password = #{password}, nickName = #{nickName}
+                where managerName = #{managerName};
+    </update>
+
+    <delete id="delManager">
+        delete from manager where managerName = #{managerName};
+    </delete>
+
+    <select id="selectManager" resultType="com.example.springboot.pojo.manager.Manager">
+        select * from manager where managerName = #{managerName};
+    </select>
+
+</mapper>
